@@ -1,20 +1,13 @@
 package dto.request.cart;
 
+import lombok.Data;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-@Builder
-public class CartAdditemRequestDto {
+@Data
+public class CartUpdateItemQuantityRequest {
 
-    @NotNull(message = "ID sản phẩm không được để trống")
-    @Positive(message = "ID sản phẩm phải là số dương")
     private Long productId;
 
     @NotNull(message = "Số lượng không được để trống")

@@ -1,104 +1,113 @@
 package controller;
 
 import constant.UrlConstant;
-import org.springframework.beans.factory.annotation.Autowired;
+import dto.request.order.UpdateOrderStatusRequestDto;
+import dto.request.product.ProductCreateRequestDto;
+import dto.request.product.ProductUpdateRequestDto;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import service.AdminService;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(UrlConstant.API_BASE_V1)
 public class AdminController {
 
-    @Autowired
-    private AdminService adminService;
+    private final AdminService adminService;
 
-// ============================= USER MANAGEMENT ========================================
+    // ============================= USER
+    // MANAGEMENT========================================
 
     @GetMapping(UrlConstant.ADMIN_USERS)
-    public Object getUsers(@RequestParam(required = false) String email) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("email", email);
-        return response; // Return request parameter
+    public ResponseEntity<Object> getUsers(@RequestParam(required = false) String email) {
+        checkAdminAccess();
+        return ResponseEntity.ok(adminService.getUsers(email));
     }
 
     @DeleteMapping(UrlConstant.CRUD_ADMIN_USERS)
-    public Object deleteUser(@PathVariable Long id) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", id);
-        return response; // Return path variable
+    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
+        checkAdminAccess();
+        adminService.deleteUser(id);
+        return ResponseEntity.ok("Delete user successfully");
     }
 
     @PatchMapping(UrlConstant.BLOCK_USERS)
-    public Object blockUser(@PathVariable Long id) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", id);
-        return response; // Return path variable
+    public ResponseEntity<Object> blockUser(@PathVariable Long id) {
+        checkAdminAccess();
+        return ResponseEntity.ok(adminService.blockUser(id));
     }
 
     @PatchMapping(UrlConstant.UNBLOCK_USERS)
-    public Object unblockUser(@PathVariable Long id) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", id);
-        return response; // Return path variable
+    public ResponseEntity<Object> unblockUser(@PathVariable Long id) {
+        checkAdminAccess();
+        return ResponseEntity.ok(adminService.unblockUser(id));
     }
 
+    // ============================= PRODUCT
+    // MANAGEMENT========================================
 
-// ============================= PRODUCT MANAGEMENT ========================================
+    @GetMapping(UrlConstant.ADMIN_PRODUCTS)
+    public ResponseEntity<Object> getProducts(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String category) {
+        checkAdminAccess();
+        return ResponseEntity.ok(adminService.getProducts(name, category));
+    }
 
     @PostMapping(UrlConstant.ADMIN_PRODUCTS)
-    public Object createProduct(@RequestBody ProductCreateRequestDto request) {
-        return request; // Return request body
+    public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductCreateRequestDto request) {
+        checkAdminAccess();
+        return ResponseEntity.ok(adminService.createProduct(request));
     }
 
     @PutMapping(UrlConstant.CRUD_ADMIN_PRODUCTS)
-    public Object updateProduct(@PathVariable Long id,
-                                @RequestBody ProductUpdateRequestDto request) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", id);
-        response.put("request", request);
-        return response; // Return all parameters
+    public ResponseEntity<Object> updateProduct(@PathVariable Long id,
+                                                @Valid @RequestBody ProductUpdateRequestDto request) {
+        checkAdminAccess();
+        return ResponseEntity.ok(adminService.updateProduct(id, request));
     }
 
     @DeleteMapping(UrlConstant.CRUD_ADMIN_PRODUCTS)
-    public Object deleteProduct(@PathVariable Long id) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", id);
-        return response; // Return path variable
+    public ResponseEntity<Object> deleteProduct(@PathVariable Long id) {
+        checkAdminAccess();
+        adminService.deleteProduct(id);
+        return ResponseEntity.ok(String.format(
+                "Delete product with id %d successfully",
+                id));
     }
 
-
-// ============================= ORDER MANAGEMENT ========================================
+    // ============================= ORDER
+    // MANAGEMENT========================================
 
     @GetMapping(UrlConstant.ADMIN_ORDERS)
-    public Object getAllOrders() {
-        return null; // No parameters
+    public ResponseEntity<Object> getAllOrders() {
+        checkAdminAccess();
+        return ResponseEntity.ok(adminService.getAllOrders());
     }
 
     @GetMapping(UrlConstant.CRUD_ADMIN_ORDERS)
-    public Object getOrderDetails(@PathVariable Long id) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", id);
-        return response; // Return path variable
+    public ResponseEntity<Object> getOrderDetails(@PathVariable Long id) {
+        checkAdminAccess();
+        return ResponseEntity.ok(adminService.getOrderDetails(id));
     }
 
     @PatchMapping(UrlConstant.UPDATE_ORDER_DETAIL)
-    public Object updateOrderStatus(@PathVariable Long id,
-                                    @RequestBody UpdateOrderStatusRequestDto request) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", id);
-        response.put("request", request);
-        return response; // Return all parameters
+    public ResponseEntity<Object> updateOrderStatus(@PathVariable Long id,
+                                                    @Valid @RequestBody UpdateOrderStatusRequestDto request) {
+        checkAdminAccess();
+        return ResponseEntity.ok(adminService.updateOrderStatus(id, request));
     }
 
     @GetMapping(UrlConstant.GET_ORDER_HISTORY)
-    public Object getOrderHistory(@PathVariable Long id) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", id);
-        return response; // Return path variable
+    public ResponseEntity<Object> getOrderHistory(@PathVariable("id") Long userId) {
+        checkAdminAccess();
+        return ResponseEntity.ok(adminService.getOrderHistory(userId));
     }
-
 
     // Helper method to check admin access (placeholder)
     private void checkAdminAccess() {
@@ -106,6 +115,5 @@ public class AdminController {
         // Will be replaced with proper admin role check when Spring Security is added
         // Could throw AccessDeniedException if not admin
     }
-
 
 }
