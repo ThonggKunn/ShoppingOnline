@@ -9,15 +9,17 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductResponseDto {
+public class AdminProductResponseDto {
 
     private Long id;
     private String name;
     private String description;
     private Integer stock;
     private Double price;
+    private Double originalPrice;
     private String category;
-
-    // For user view - hide original price and some sensitive info
+    private String status; // ACTIVE, INACTIVE, OUT_OF_STOCK
+    private String createdAt;
+    private String updatedAt;
 
 }
