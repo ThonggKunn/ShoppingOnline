@@ -1,59 +1,59 @@
 package controller;
 
 import constant.UrlConstant;
-import org.springframework.beans.factory.annotation.Autowired;
+import dto.request.order.CreateOrderRequestDto;
+import dto.request.order.UpdateOrderInfoRequestDto;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import service.OrderService;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(UrlConstant.API_BASE_V1)
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
 
     @GetMapping(UrlConstant.USER_ORDERS)
-    public Object getUserOrders() {
-        return null; // No parameters
+    public ResponseEntity<Object> getUserOrders() {
+        Long userId = getCurrentUserId();
+        return ResponseEntity.ok(orderService.getUserOrders(userId));
     }
 
-    @PutMapping(UrlConstant.ORDERS)
-    public Object createOrder(@RequestBody CreateOrderRequestDto request) {
-        return request; // Return request body
+    @PostMapping(UrlConstant.ORDERS)
+    public ResponseEntity<Object> createOrder(@Valid @RequestBody CreateOrderRequestDto request) {
+        Long userId = getCurrentUserId();
+        return ResponseEntity.ok(orderService.createOrder(userId, request));
     }
 
     @GetMapping(UrlConstant.CRUD_USER_ORDERS)
-    public Object getUserOrderDetail(@PathVariable Long id) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", id);
-        return response; // Return path variable
+    public ResponseEntity<Object> getUserOrderDetail(@PathVariable Long id) {
+        Long userId = getCurrentUserId();
+        return ResponseEntity.ok(orderService.getOrderDetailsForUser(userId, id));
     }
 
     @PatchMapping(UrlConstant.UPDATE_ORDER_INFO)
-    public Object updateOrderInfo(@PathVariable Long id,
-                                  @RequestBody UpdateOrderInfoRequestDto request) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", id);
-        response.put("request", request);
-        return response; // Return all parameters
+    public ResponseEntity<Object> updateOrderInfo(@PathVariable Long id,
+                                                  @Valid @RequestBody UpdateOrderInfoRequestDto request) {
+        Long userId = getCurrentUserId();
+        return ResponseEntity.ok(orderService.updateOrderInfo(userId, id, request));
     }
 
     @PatchMapping(UrlConstant.CANCEL_ORDER)
-    public Object cancelOrder(@PathVariable Long id) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", id);
-        return response; // Return path variable
+    public ResponseEntity<Object> cancelOrder(@PathVariable Long id) {
+        Long userId = getCurrentUserId();
+        return ResponseEntity.ok(orderService.cancelOrder(userId, id));
     }
-
 
     // Helper method to get current user ID (placeholder)
     public static Long getCurrentUserId() {
         // Placeholder implementation
-        // Will be replaced with SecurityContextHolder implementation when Spring Security is added
-        return 1L;
+        // Will be replaced with SecurityContextHolder implementation when Spring
+        // Security is added
+        return 2L;
     }
-
 
 }

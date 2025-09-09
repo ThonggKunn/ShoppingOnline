@@ -1,28 +1,29 @@
 package controller;
 
 import constant.UrlConstant;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import service.ProductService;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(UrlConstant.API_BASE_V1)
 public class ProductController {
 
+    private final ProductService productService;
+
     @GetMapping(UrlConstant.PRODUCTS)
-    public Object getProducts(@RequestParam(required = false) String category,
-                              @RequestParam(required = false) String name) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("category", category);
-        response.put("name", name);
-        return response; // Return request parameters
+    public ResponseEntity<Object> getProducts(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String category) {
+        return ResponseEntity.ok(productService.getProducts(name, category));
     }
 
     @GetMapping(UrlConstant.CRUD_PRODUCT)
-    public Object getProductById(@PathVariable Long id) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", id);
-        return response; // Return path variable
+    public ResponseEntity<Object> getProductById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.getProductById(id));
     }
+
 }

@@ -1,29 +1,32 @@
 package controller;
 
 import constant.UrlConstant;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import service.UserService;
 
 @RestController
 @RequestMapping(UrlConstant.API_BASE_V1)
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
+    private final UserService userService;
 
     @GetMapping(UrlConstant.USER_PROFILE)
-    public Object getUserProfile() {
-        return null; // No parameters
+    public ResponseEntity<Object> getUserProfile() {
+        Long userId = getCurrentUserId();
+        return ResponseEntity.ok(userService.getUserById(userId));
     }
 
     // Helper method to get current user ID (placeholder)
     public static Long getCurrentUserId() {
         // Placeholder implementation
-        // Will be replaced with SecurityContextHolder implementation when Spring Security is added
-        return 1L;
+        // Will be replaced with SecurityContextHolder implementation when Spring
+        // Security is added
+        return 2L;
     }
 
 }

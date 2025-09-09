@@ -1,18 +1,26 @@
 package controller;
 
 import constant.UrlConstant;
+import dto.request.statistic.DateRangeRequestDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import service.StatisticService;
 
 @RestController
 @RequestMapping(UrlConstant.API_BASE_V1)
 public class StatisticController {
 
+    @Autowired
+    private StatisticService statisticService;
+
     @GetMapping(UrlConstant.GET_STATS_REVENUE)
-    public Object getRevenueStats(@RequestBody(required = false) DateRangeRequestDto request) {
-        return request; // Return request body if provided, or null if not
+    public ResponseEntity<Object> getRevenueStats(@RequestBody(required = false) DateRangeRequestDto request) {
+        checkAdminAccess();
+        return ResponseEntity.ok(statisticService.getRevenueStatistics(request));
     }
 
     // Helper method to check admin access (placeholder)
