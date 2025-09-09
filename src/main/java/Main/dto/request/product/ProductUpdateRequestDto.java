@@ -12,26 +12,26 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProductUpdateRequestDto {
 
-    @Size(min = 1, max = 200, message = "Tên sản phẩm phải từ 1 đến 200 ký tự")
+    @Size(min = 1, max = 200, message = "Product name must be between 1 and 200 characters")
     private String name;
 
-    @Size(max = 1000, message = "Mô tả sản phẩm không được vượt quá 1000 ký tự")
+    @Size(max = 1000, message = "Product description must not exceed 1000 characters")
     private String description;
 
 
-    @Min(value = 0, message = "Số lượng không được âm")
-    @Max(value = 999999, message = "Số lượng không được vượt quá 999999")
+    @Min(value = 0, message = "Quantity must not be negative")
+    @Max(value = 999999, message = "Quantity cannot exceed 999999")
     private Integer stock;
 
-    @DecimalMin(value = "0.01", message = "Giá sản phẩm phải lớn hơn 0")
-    @Digits(integer = 10, fraction = 2, message = "Giá sản phẩm không đúng định dạng")
+    @DecimalMin(value = "0.01", message = "Product price must be greater than 0")
+    @Digits(integer = 10, fraction = 2, message = "Product price is not in correct format")
     private Double price;
 
-    @DecimalMin(value = "0.01", message = "Giá gốc phải lớn hơn 0")
-    @Digits(integer = 10, fraction = 2, message = "Giá gốc không đúng định dạng")
+    @DecimalMin(value = "0.01", message = "Original price must be greater than 0")
+    @Digits(integer = 10, fraction = 2, message = "Original price is not in correct format")
     private Double originalPrice;
 
-    @Size(max = 50, message = "Danh mục không được vượt quá 50 ký tự")
+    @Size(max = 50, message = "Category must not exceed 50 characters")
     private String category;
 
 }

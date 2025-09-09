@@ -10,8 +10,8 @@ public class CartUpdateItemQuantityRequest {
 
     private Long productId;
 
-    @NotNull(message = "Số lượng không được để trống")
-    @Min(value = 1, message = "Số lượng phải ít nhất là 1")
-    @Max(value = 100, message = "Số lượng không được vượt quá 100")
+    @NotNull(message = "Quantity cannot be blank")
+    @Min(value = 1, message = "Quantity must be at least 1")
+    @Max(value = 100, message = "Quantity must not exceed 100")
     private Integer quantity;
 }

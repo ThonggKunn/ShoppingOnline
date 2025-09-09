@@ -9,10 +9,10 @@ import java.util.List;
 @Data
 public class CreateOrderRequestDto {
 
-    @Size(max = 500, message = "Mô tả đơn hàng không được vượt quá 500 ký tự")
+    @Size(max = 500, message = "Order description must not exceed 500 characters")
     private String description;
 
-    @NotEmpty(message = "Danh sách sản phẩm không được để trống")
+    @NotEmpty(message = "Product list cannot be empty")
     @Valid
     private List<OrderItemRequestDto> items;
 }

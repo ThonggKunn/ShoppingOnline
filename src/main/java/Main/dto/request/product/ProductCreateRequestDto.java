@@ -12,29 +12,29 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProductCreateRequestDto {
 
-    @NotBlank(message = "Tên sản phẩm không được để trống")
-    @Size(min = 1, max = 200, message = "Tên sản phẩm phải từ 1 đến 200 ký tự")
+    @NotBlank(message = "Product name cannot be blank")
+    @Size(min = 1, max = 200, message = "Product name must be between 1 and 200 characters")
     private String name;
 
-    @Size(max = 1000, message = "Mô tả sản phẩm không được vượt quá 1000 ký tự")
+    @Size(max = 1000, message = "Product description must not exceed 1000 characters")
     private String description;
 
-    @NotNull(message = "Số lượng không được để trống")
-    @Min(value = 0, message = "Số lượng không được âm")
-    @Max(value = 999999, message = "Số lượng không được vượt quá 999999")
+    @NotNull(message = "Quantity cannot be blank")
+    @Min(value = 0, message = "Quantity cannot be negative")
+    @Max(value = 999999, message = "The number cannot exceed 999999")
     private Integer stock;
 
-    @NotNull(message = "Giá sản phẩm không được để trống")
-    @DecimalMin(value = "0.01", message = "Giá sản phẩm phải lớn hơn 0")
-    @Digits(integer = 10, fraction = 2, message = "Giá sản phẩm không đúng định dạng")
+    @NotNull(message = "Product price cannot be left blank")
+    @DecimalMin(value = "0.01", message = "Product price must be greater than 0")
+    @Digits(integer = 10, fraction = 2, message = "Product price is not in correct format")
     private Double price;
 
-    @DecimalMin(value = "0.01", message = "Giá gốc phải lớn hơn 0")
-    @Digits(integer = 10, fraction = 2, message = "Giá gốc không đúng định dạng")
+    @DecimalMin(value = "0.01", message = "Original price must be greater than 0")
+    @Digits(integer = 10, fraction = 2, message = "Original price is not in correct format")
     private Double originalPrice;
 
-    @NotBlank(message = "Danh mục không được để trống")
-    @Size(max = 50, message = "Danh mục không được vượt quá 50 ký tự")
+    @NotBlank(message = "Category must not be blank")
+    @Size(max = 50, message = "Category must not exceed 50 characters")
     private String category;
 
 }

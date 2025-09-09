@@ -6,6 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 @Data
 public class UpdateOrderStatusRequestDto {
 
-    @NotBlank(message = "Trạng thái đơn hàng không được để trống")
+    @NotBlank(message = "Product status cannot be blank")
     private String status;
 }

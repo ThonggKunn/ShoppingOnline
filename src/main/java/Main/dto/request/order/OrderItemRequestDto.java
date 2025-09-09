@@ -9,12 +9,12 @@ import jakarta.validation.constraints.Positive;
 @Data
 public class OrderItemRequestDto {
 
-    @NotNull(message = "ID sản phẩm không được để trống")
-    @Positive(message = "ID sản phẩm phải là số dương")
+    @NotNull(message = "ID product cannot be blank")
+    @Positive(message = "ID product must be a positive number")
     private Long productId;
 
-    @NotNull(message = "Số lượng không được để trống")
-    @Min(value = 1, message = "Số lượng phải ít nhất là 1")
-    @Max(value = 100, message = "Số lượng không được vượt quá 100")
+    @NotNull(message = "Quantity cannot be black")
+    @Min(value = 1, message = "Quantity must be at least 1")
+    @Max(value = 100, message = "Quantity cannot be exceed 100")
     private Integer quantity;
 }

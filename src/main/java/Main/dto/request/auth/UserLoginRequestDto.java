@@ -10,13 +10,13 @@ import lombok.Setter;
 @Setter
 public class UserLoginRequestDto {
 
-    @NotBlank(message = "Email không được để trống")
-    @Email(message = "Email không đúng định dạng")
-    @Size(max = 100, message = "Email không được vượt quá 100 ký tự")
+    @NotBlank(message = "Email cannot be blank")
+    @Email(message = "Email is not in correct format.")
+    @Size(max = 100, message = "Email must not exceed 100 characters")
     private String email;
 
-    @NotBlank(message = "Mật khẩu không được để trống")
-    @Size(min = 6, max = 50, message = "Mật khẩu phải từ 6 đến 50 ký tự")
+    @NotBlank(message = "Password cannot be blank")
+    @Size(min = 6, max = 50, message = "Password must be between 6 and 50 characters")
     private String password;
 
 }
