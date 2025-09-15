@@ -4,6 +4,7 @@ import Main.dto.request.order.UpdateOrderStatusRequestDto;
 import Main.dto.request.product.ProductCreateRequestDto;
 import Main.dto.request.product.ProductUpdateRequestDto;
 import Main.dto.response.order.OrderResponseDto;
+import Main.dto.response.product.AdminProductResponseDto;
 import Main.dto.response.product.ProductCreateResponseDto;
 import Main.dto.response.product.ProductUpdateResponseDto;
 import Main.dto.response.user.UserResponseDto;
