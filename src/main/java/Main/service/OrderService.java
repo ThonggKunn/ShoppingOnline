@@ -1,5 +1,12 @@
 package Main.service;
 
+import Main.dto.request.order.CreateOrderRequestDto;
+import Main.dto.request.order.UpdateOrderInfoRequestDto;
+import Main.dto.request.order.UpdateOrderStatusRequestDto;
+import Main.dto.response.order.OrderResponseDto;
+
+import java.util.List;
+
 public interface OrderService {
 
     // User functions
