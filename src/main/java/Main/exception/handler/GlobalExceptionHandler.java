@@ -4,8 +4,7 @@ import Main.exception.ApiException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.net.BindException;
+import org.springframework.validation.BindException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -14,8 +13,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleBindException(BindException e) {
         return ResponseEntity
                 .status(400)
-                .body(e.getAllErrors().get(0).getDefaultMessage());
+                .body(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
     }
+
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<Object> handleApiException(ApiException e) {
